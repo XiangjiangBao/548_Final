@@ -22,8 +22,14 @@ def convert_box_num(h, w, x_, y_, w_, h_):
 
 
 def convert_classfication(c1, c2, c3, c4, c5, c6):
-	classification = [c1, c2, c3, c4, c5, c6]
-	result = classification.index(max(classification))
+	if [c1, c2, c3, c4, c5, c6] == [0, 0, 0, 0, 0, 0]:
+		return 1
+	if c1 == 2 and [c2, c3, c4, c5, c6] == [0, 0, 0, 0, 0]:
+		return 0
+	classification = [c2, c3, c4, c5, c6]
+	if classification == [0, 0, 0, 0, 0]:
+		return 0
+	result = classification.index(max(classification)) + 1
 	return result
 
 
