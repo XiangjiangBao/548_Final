@@ -1,4 +1,3 @@
-tensorflow
-keras
-numpy
-opencv
+ultralytics
+opencv-python
+imageio
