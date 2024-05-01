@@ -3,7 +3,12 @@ import time
 from ultralytics import YOLO
 model_path = ("E:/Machine Learning/yolov8n_custom_Aug_svd-20240428T225755Z-001/"
          "yolov8n_custom_Aug_svd/weights/best.pt")
+
+_path
+
 model = YOLO(model_path)
+
+
 
 cap = cv2.VideoCapture(0)
 frame_count = 0
