@@ -9,9 +9,11 @@
 * `Show_image.py` is the file used to perform data augmentation
 * `run_gif.py` is the file used to generate prediction result for .gif or short videos
 * `run_videos.py` is the file used to generate prediction result for PC camera capture
+* `calculate_conf.py` is the file used to visualize model and generate occulation map
 * `yolov8.yaml` is the file used to define the structure of customized yolo network
 * `weights/` directory contains the weights after training for yolo network
 * `expression_recognition/` directory contains the file used to train recognition network and perform data augmentation.
+
 ### How to run
 * Please make sure you are using the environment provided in the following link:\
 https://drive.google.com/file/d/1so5AAy0hiYaKFYiLDCyRDJKPkZXDRpLL/view?usp=sharing 
