@@ -17,7 +17,7 @@
 https://drive.google.com/file/d/1so5AAy0hiYaKFYiLDCyRDJKPkZXDRpLL/view?usp=sharing 
 * The pipeline is divided into two stages. The detection network will extract face for each person in the image, and a specific recognition network will be used to classify the expression for each face.
 * In `run_video.py` and `run_gif.py`, please modify the model path to the path to the weights
-you want to use. The weights are stored in `weights/ directory`. The weight files start with `yolov8n` are weights for detection network, while others are weights for recognition network.
+you want to use. The weights are stored in `weights/` directory. The weight files start with `yolov8n` are weights for detection network, while others are weights for recognition network.
 * After running run_video.py, the program will open the default camera of the device and perform detection.
 * For other device option, please modify the code in run_video
 
