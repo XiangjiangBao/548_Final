@@ -26,7 +26,7 @@ you want to use. The weights are stored in `weights/` directory. The weight file
 * The dataset used for training detection network can be obtained from:
 https://drive.google.com/file/d/1NRnWEFJ_MFLFF5yZo8DaKX1KFjY_1bd3/view?usp=sharing \
 https://drive.google.com/file/d/1eaYsbVetQACV-ofHOrxrdgop6woMBvul/view?usp=sharing 
-* The dataset used for training recognition network can be obtained from:
+* The dataset used for training recognition network can be obtained from:\
 https://drive.google.com/file/d/1JBEoXHuk4K8Xg93-d4QS6dasnsiXmaP_/view?usp=sharing
 * The file used to train the model can be found in train_file. The training was done in
 Colab, hence modification of `path` in .yaml file for dataset is needed.
