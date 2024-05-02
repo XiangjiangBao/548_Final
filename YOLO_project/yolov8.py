@@ -1,41 +1,21 @@
 import ultralytics
 from ultralytics import YOLO
 import cv2
+from scipy import signal
+import numpy as np
 import torch.nn as nn
 import torch
 from PIL import Image
+def silu(x):
+    return x * (1 / (1 + np.exp(-x)))
 
 
-class CustomLayer(nn.Module):
-    def __init__(self, in_channel, out_channel, kernel_size, stride):
-        super(CustomLayer, self).__init__()
-        self.conv = nn.Conv2d(in_channel, out_channel, kernel_size, stride)
-    def forward(self, x):
-        return self.conv(x)
-
-    # yaml_path = 'E:/Machine Learning/YOLO_Aug/YOLO_Aug.yaml'
-
-# Load the model.
 model_path = 'E:/Machine Learning/detect-20240427T043656Z-001/detect/yolov8n_non_normalization/weights/best.pt'
 # model = YOLO('E:/Machine Learning/detect-20240427T043656Z-001/detect/yolov8n_non_normalization/weights/best.pt')
 # image_path = "E:/Machine Learning/1507033044-1-16.mp4"
 # prediction = model.predict(source=image_path, show=True)
 # print(prediction)
 yaml_path = "E:/Machine Learning/YOLO_Aug/YOLO_Aug.yaml"
-
-#yolo_model = YOLO(model_path)
-
-#custom_conv = CustomLayer()
-
-#yolo_model.model.add_module()
-
-#results_2 = yolo_model.train(
-#   data=yaml_path,
-#   epochs=50,
-#   batch=8,
-#   optimizer='Adam',
-#   name='yolov8n_non_normalization'
-#)
 
 file1 = ("E:/Machine Learning/"
         "yolov8n_Aug_1003-20240428T113208Z-001/"
@@ -53,17 +33,29 @@ yolo_model = YOLO(file4)
 # add_custom_head(model.model)
 data_path = "F:/ML_Final/548_Final/YOLO_Aug.yaml"
 # yolo_model.val(data=data_path)
-
-# 获取模型参数字典
+image_path = "F:/ML_Final/548_Final/0_Parade_marchingband_1_849.jpg"
 model_params = yolo_model.state_dict()
-print(model_params)
-# 提取特定层权重
 gamma_r = model_params['model.model.0.gamma_r']
 gamma_g = model_params['model.model.0.gamma_g']
 gamma_b = model_params['model.model.0.gamma_b']
 
 color_kernel = model_params['model.model.1.conv.weight']
 color_bias = model_params['model.model.1.conv.bias']
-
 sharpen = model_params['model.model.2.conv.weight']
-print(sharpen)
+print(sharpen[0][0])
+image = cv2.imread(image_path)/255
+image[:,:,0] = (image[:,:,0] * image[:,:,0]**gamma_r.tolist())
+image[:,:,1] = (image[:,:,1] * image[:,:,1]**gamma_g.tolist())
+image[:,:,2] = (image[:,:,2] * image[:,:,2]**gamma_b.tolist())
+image[:,:,0] = (image[:,:,0] * float(color_kernel[0])+float(color_bias[0]))
+image[:,:,1] = (image[:,:,1] * float(color_kernel[1])+float(color_bias[1]))
+image[:,:,2] = (image[:,:,2] * float(color_kernel[2])+float(color_bias[2]))
+image[:,:,0] = (signal.convolve2d(image[:,:,0],sharpen[0][0].tolist(), mode='same'))
+image[:,:,1] = (signal.convolve2d(image[:,:,1],sharpen[1][0].tolist(), mode='same'))
+image[:,:,2] = (signal.convolve2d(image[:,:,2],sharpen[2][0].tolist(), mode='same'))
+image_p = (np.maximum(image,0)*512).astype(np.uint8)
+image_n = (np.minimum(image,0)*512).astype(np.uint8)
+image = (image+1)/2*255
+image_int = image.astype(np.uint8)
+cv2.imshow('window',image_n)
+cv2.waitKey(0)
